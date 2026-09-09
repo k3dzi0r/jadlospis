@@ -1,0 +1,41 @@
+name: Aktualizuj jadlospis PM10
+
+on:
+  schedule:
+    - cron: '15 5 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: LibreOffice
+        run: sudo apt-get update && sudo apt-get install -y libreoffice-writer
+
+      - name: Zależności
+        run: pip install -r requirements.txt
+
+      - name: Pobierz i skonwertuj jadłospis
+        run: python scrape.py
+
+      - name: Zapisz wynik
+        run: |
+          git config user.name "pm10-menu-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add menu.json
+          if git diff --cached --quiet; then
+            echo "Brak zmian"
+          else
+            git commit -m "Update PM10 menu"
+            git push
+          fi
