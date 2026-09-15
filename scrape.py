@@ -49,7 +49,6 @@ def get_current_link() -> tuple[str, str]:
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
     candidates, fallback_docs = [], []
-
     for index, a in enumerate(soup.find_all("a", href=True)):
         href = urljoin(PAGE, a["href"])
         label = " ".join(a.stripped_strings).strip()
@@ -59,28 +58,24 @@ def get_current_link() -> tuple[str, str]:
             candidates.append((href, label, parsed, index))
         elif path.endswith((".doc", ".docx")) and "jadlosp" in ascii_pl(label + " " + path):
             fallback_docs.append((href, label or Path(path).name, index))
-
     if not candidates:
         if fallback_docs:
             href, label, _ = fallback_docs[-1]
             return href, label
         raise RuntimeError("Nie znaleziono linku do jadłospisu")
-
     today = datetime.now().date()
     dated = []
     for href, label, (d1, m1, d2, m2), index in candidates:
         try:
             start = datetime(today.year, m1, d1).date()
-            end_year = today.year + 1 if m2 < m1 else today.year
-            end = datetime(end_year, m2, d2).date()
+            end = datetime(today.year + (m2 < m1), m2, d2).date()
         except ValueError:
             continue
         dated.append((start, end, href, label, index))
         if start <= today <= end:
             return href, label
-
     if dated:
-        _, _, href, label, _ = max(dated, key=lambda item: (item[0], item[4]))
+        _, _, href, label, _ = max(dated, key=lambda x: (x[0], x[4]))
         return href, label
     if fallback_docs:
         href, label, _ = fallback_docs[-1]
@@ -88,65 +83,61 @@ def get_current_link() -> tuple[str, str]:
     raise RuntimeError("Nie znaleziono prawidłowego linku do jadłospisu")
 
 
-def doc_to_text(data: bytes, suffix: str) -> str:
+def doc_to_html(data: bytes, suffix: str) -> str:
+    """Konwertuje Worda do HTML, dzięki czemu zachowujemy prawdziwe komórki tabeli."""
     with tempfile.TemporaryDirectory() as td:
         src = Path(td) / ("menu" + suffix)
         src.write_bytes(data)
         subprocess.run(
-            ["libreoffice", "--headless", "--convert-to", "txt:Text", "--outdir", td, str(src)],
+            ["libreoffice", "--headless", "--convert-to", "html:HTML", "--outdir", td, str(src)],
             check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         )
-        txt = Path(td) / "menu.txt"
-        if not txt.exists():
-            raise RuntimeError("LibreOffice nie utworzył pliku tekstowego")
-        return txt.read_text(encoding="utf-8", errors="replace")
+        html_files = list(Path(td).glob("*.html")) + list(Path(td).glob("*.htm"))
+        if not html_files:
+            raise RuntimeError("LibreOffice nie utworzył pliku HTML")
+        return html_files[0].read_text(encoding="utf-8", errors="replace")
 
 
-def normalize(text: str) -> str:
-    text = text.replace("\ufeff", "").replace("\r\n", "\n").replace("\r", "\n")
-    text = re.sub(r"[ \t]+", " ", text)
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    return text.strip()
+def clean_cell(cell) -> str:
+    # Separator spacji między akapitami/wierszami wewnątrz tej samej komórki.
+    text = cell.get_text(" ", strip=True).replace("\xa0", " ")
+    return re.sub(r"\s+", " ", text).strip()
 
 
-def clean_meal(text: str) -> str:
-    text = re.sub(r"\n+", " ", text)
-    text = re.sub(r"\s+", " ", text).strip(" ,\n")
-    return text
+def parse_date(value: str):
+    m = re.search(r"\b(\d{1,2})\.(\d{1,2})\.(\d{2,4})\b", value)
+    if not m:
+        return None
+    d, mo, y = map(int, m.groups())
+    if y < 100:
+        y += 2000
+    try:
+        return datetime(y, mo, d).date()
+    except ValueError:
+        return None
 
 
-def parse_menu(text: str) -> dict[str, dict[str, str]]:
-    """Rozbija tabelę LibreOffice na dni i trzy posiłki."""
-    # Każdy dzień zaczyna się od daty dd.mm.yy lub dd.mm.yyyy.
-    date_re = re.compile(r"(?m)^(\d{1,2})\.(\d{1,2})\.(\d{2,4})\s*$")
-    matches = list(date_re.finditer(text))
+def parse_menu(html: str) -> dict[str, dict[str, str]]:
+    """Czyta wiersze tabeli Worda: DATA | I ŚNIADANIE | II ŚNIADANIE | OBIAD."""
+    soup = BeautifulSoup(html, "html.parser")
     days = {}
 
-    for i, match in enumerate(matches):
-        d, m, y = map(int, match.groups())
-        if y < 100:
-            y += 2000
-        date = datetime(y, m, d).date()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
-        block = text[match.end():end].strip()
+    for row in soup.find_all("tr"):
+        cells = row.find_all(["td", "th"], recursive=False)
+        if len(cells) < 4:
+            continue
+        values = [clean_cell(c) for c in cells]
+        date = parse_date(values[0])
+        if not date:
+            continue
 
-        # Pierwsza linia po dacie to skrót/nazwa dnia tygodnia.
-        lines = block.splitlines()
-        if lines and ascii_pl(lines[0]).rstrip(".") in {
-            "poniedz", "poniedzialek", "wtorek", "sroda", "czwartek", "piatek", "sobota", "niedziela"
-        }:
-            block = "\n".join(lines[1:]).strip()
-
-        # Eksport tabeli z LibreOffice zachowuje komórki jako akapity rozdzielone pustą linią.
-        cells = [clean_meal(x) for x in re.split(r"\n\s*\n", block) if clean_meal(x)]
-        if len(cells) < 3:
-            raise RuntimeError(f"Nie udało się rozpoznać 3 posiłków dla {date.isoformat()}: {cells}")
-
-        # Gdy wewnątrz komórki pojawią się dodatkowe puste akapity, wszystko od trzeciej
-        # części należy już do obiadu.
-        breakfast_1 = cells[0]
-        breakfast_2 = cells[1]
-        lunch = " ".join(cells[2:])
+        breakfast_1, breakfast_2 = values[1], values[2]
+        lunch = " ".join(v for v in values[3:] if v).strip()
+        if not breakfast_1 or not breakfast_2 or not lunch:
+            raise RuntimeError(
+                f"Niepełny jadłospis dla {date.isoformat()}: "
+                f"I={breakfast_1!r}, II={breakfast_2!r}, obiad={lunch!r}"
+            )
 
         days[date.isoformat()] = {
             "day": WEEKDAYS[date.weekday()],
@@ -156,7 +147,7 @@ def parse_menu(text: str) -> dict[str, dict[str, str]]:
         }
 
     if not days:
-        raise RuntimeError("Nie udało się znaleźć żadnych dni w jadłospisie")
+        raise RuntimeError("Nie udało się odczytać wierszy jadłospisu z tabeli")
     return days
 
 
@@ -165,8 +156,8 @@ def main() -> None:
     r = requests.get(url, headers={"User-Agent": UA}, timeout=60)
     r.raise_for_status()
     suffix = ".docx" if url.lower().split("?")[0].endswith(".docx") else ".doc"
-    text = normalize(doc_to_text(r.content, suffix))
-    menu = parse_menu(text)
+    html = doc_to_html(r.content, suffix)
+    menu = parse_menu(html)
     payload = {
         "source_page": PAGE,
         "source_document": url,
