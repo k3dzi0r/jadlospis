@@ -2,11 +2,18 @@ name: Aktualizuj jadlospis PM10
 
 on:
   schedule:
-    - cron: '15 5 * * 1-5'
+    # GitHub Actions cron uses UTC. During CEST these run at 07:07, 07:37 and 08:07 in Poland.
+    # Multiple attempts make the update resilient to delayed or skipped scheduled runs.
+    - cron: '7,37 5 * * 1-5'
+    - cron: '7 6 * * 1-5'
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: pm10-menu-update
+  cancel-in-progress: false
 
 jobs:
   update:
