@@ -287,7 +287,8 @@
     }
 
     function parseKey(key) {
-      return new Date(key + "T12:00:00+02:00");
+      const [year, month, day] = key.split("-").map(Number);
+      return new Date(Date.UTC(year, month - 1, day, 12));
     }
 
     function prettyDate(key) {
@@ -305,9 +306,9 @@
       }).format(new Date(iso));
     }
 
-    function tomorrowKey() {
-      const now = new Date();
-      return dateKey(new Date(now.getTime() + 36 * 60 * 60 * 1000));
+    function addDaysKey(key, days) {
+      const [year, month, day] = key.split("-").map(Number);
+      return dateKey(new Date(Date.UTC(year, month - 1, day + days, 12)));
     }
 
     function escapeHtml(value = "") {
@@ -321,7 +322,7 @@
 
     function labelFor(key, firstKey, today) {
       if (key === today) return "Dziś";
-      if (key === tomorrowKey()) return "Jutro";
+      if (key === addDaysKey(today, 1)) return "Jutro";
       if (key === firstKey && firstKey !== today) return "Najbliższy jadłospis";
       return "Następny dzień przedszkolny";
     }
