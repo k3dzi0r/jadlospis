@@ -1,0 +1,15 @@
+{
+  "name": "Jadłospis PM10 Toruń",
+  "short_name": "Jadłospis PM10",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff8ef",
+  "theme_color": "#fff8ef",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
