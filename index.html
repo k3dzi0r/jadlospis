@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff8ef">
+  <meta name="description" content="Aktualny jadłospis Przedszkola Miejskiego nr 10 w Toruniu – dziś i następny dzień przedszkolny.">
+  <title>Jadłospis PM10 Toruń</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fff8ef;
+      --paper: rgba(255,255,255,.86);
+      --paper-strong: #fff;
+      --ink: #2c2925;
+      --muted: #756e65;
+      --accent: #e97942;
+      --accent-soft: #fff0df;
+      --green: #688a65;
+      --border: rgba(73,58,45,.10);
+      --shadow: 0 18px 50px rgba(88,65,43,.10);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-rounded, "SF Pro Rounded", "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 8%, rgba(255,203,122,.30), transparent 28rem),
+        radial-gradient(circle at 90% 35%, rgba(137,188,142,.20), transparent 26rem),
+        var(--bg);
+    }
+
+    .wrap {
+      width: min(980px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 36px 0 52px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 3.8rem);
+      line-height: .96;
+      letter-spacing: -.045em;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .refresh {
+      border: 1px solid var(--border);
+      background: var(--paper);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(88,65,43,.06);
+    }
+
+    .refresh:hover { background: #fff; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .day-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .day-card.primary {
+      border-color: rgba(233,121,66,.22);
+      background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,248,239,.92));
+    }
+
+    .day-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #a54e27;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .day-card.secondary .day-label {
+      background: #edf4eb;
+      color: #52724f;
+    }
+
+    .day-title {
+      margin: 12px 0 3px;
+      font-size: 1.55rem;
+      line-height: 1.1;
+      text-transform: capitalize;
+    }
+
+    .day-date {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .meal {
+      padding: 15px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .meal:first-of-type { border-top: 0; }
+
+    .meal h3 {
+      margin: 0 0 6px;
+      font-size: .93rem;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .meal p {
+      margin: 0;
+      color: #49443e;
+      line-height: 1.52;
+      font-size: .96rem;
+    }
+
+    .panel {
+      margin-top: 18px;
+      background: rgba(255,255,255,.67);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    details summary {
+      cursor: pointer;
+      padding: 17px 20px;
+      font-weight: 800;
+      list-style: none;
+    }
+
+    details summary::-webkit-details-marker { display: none; }
+
+    details summary::after {
+      content: "＋";
+      float: right;
+      color: var(--muted);
+    }
+
+    details[open] summary::after { content: "−"; }
+
+    .all-days {
+      border-top: 1px solid var(--border);
+      padding: 4px 20px 14px;
+    }
+
+    .all-day {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .all-day:last-child { border-bottom: 0; }
+
+    .all-day strong {
+      display: block;
+      margin-bottom: 5px;
+      text-transform: capitalize;
+    }
+
+    .all-day p {
+      margin: 3px 0;
+      color: #514b44;
+      font-size: .92rem;
+      line-height: 1.42;
+    }
+
+    footer {
+      margin-top: 18px;
+      padding: 0 4px;
+      color: var(--muted);
+      font-size: .82rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    footer a { color: inherit; }
+
+    .state {
+      grid-column: 1 / -1;
+      padding: 34px;
+      text-align: center;
+      color: var(--muted);
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .state strong {
+      color: var(--ink);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 700px) {
+      .wrap { padding-top: 24px; }
+      header { align-items: start; }
+      .refresh { padding: 9px 12px; }
+      .cards { grid-template-columns: 1fr; }
+      .day-card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div>
+        <p class="eyebrow">PM10 Toruń</p>
+        <h1>Co dziś jemy? 🍎</h1>
+        <p class="subtitle">Jadłospis na dziś i następny dzień przedszkolny.</p>
+      </div>
+      <button class="refresh" type="button" onclick="location.reload()">↻ Odśwież</button>
+    </header>
+
+    <section id="cards" class="cards" aria-live="polite">
+      <div class="state"><strong>Ładuję jadłospis…</strong>Chwileczkę.</div>
+    </section>
+
+    <details id="fullMenu" class="panel" hidden>
+      <summary>Cały aktualny jadłospis</summary>
+      <div id="allDays" class="all-days"></div>
+    </details>
+
+    <footer id="footer"></footer>
+  </main>
+
+  <script>
+    const TZ = "Europe/Warsaw";
+    const mealDefs = [
+      ["breakfast_1", "🥪", "I śniadanie"],
+      ["breakfast_2", "🍎", "II śniadanie"],
+      ["lunch", "🍲", "Obiad"]
+    ];
+
+    function dateKey(date) {
+      const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit"
+      }).formatToParts(date);
+      const get = type => parts.find(p => p.type === type).value;
+      return get("year") + "-" + get("month") + "-" + get("day");
+    }
+
+    function parseKey(key) {
+      return new Date(key + "T12:00:00+02:00");
+    }
+
+    function prettyDate(key) {
+      return new Intl.DateTimeFormat("pl-PL", {
+        timeZone: TZ, day: "numeric", month: "long"
+      }).format(parseKey(key));
+    }
+
+    function prettyUpdated(iso) {
+      if (!iso) return "";
+      return new Intl.DateTimeFormat("pl-PL", {
+        timeZone: TZ,
+        day: "2-digit", month: "2-digit", year: "numeric",
+        hour: "2-digit", minute: "2-digit"
+      }).format(new Date(iso));
+    }
+
+    function tomorrowKey() {
+      const now = new Date();
+      return dateKey(new Date(now.getTime() + 36 * 60 * 60 * 1000));
+    }
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function labelFor(key, firstKey, today) {
+      if (key === today) return "Dziś";
+      if (key === tomorrowKey()) return "Jutro";
+      if (key === firstKey && firstKey !== today) return "Najbliższy jadłospis";
+      return "Następny dzień przedszkolny";
+    }
+
+    function dayCard(key, item, kind, firstKey, today) {
+      const meals = mealDefs
+        .filter(([field]) => item[field])
+        .map(([field, icon, label]) => `
+          <div class="meal">
+            <h3><span aria-hidden="true">${icon}</span> ${label}</h3>
+            <p>${escapeHtml(item[field])}</p>
+          </div>
+        `).join("");
+
+      return `
+        <article class="day-card ${kind}">
+          <span class="day-label">${escapeHtml(labelFor(key, firstKey, today))}</span>
+          <h2 class="day-title">${escapeHtml(item.day || "")}</h2>
+          <p class="day-date">${escapeHtml(prettyDate(key))}</p>
+          ${meals}
+        </article>
+      `;
+    }
+
+    function fullDay(key, item) {
+      return `
+        <div class="all-day">
+          <strong>${escapeHtml(item.day || "")}, ${escapeHtml(prettyDate(key))}</strong>
+          ${mealDefs.filter(([field]) => item[field]).map(([field, icon, label]) =>
+            `<p><b>${icon} ${label}:</b> ${escapeHtml(item[field])}</p>`
+          ).join("")}
+        </div>
+      `;
+    }
+
+    async function loadMenu() {
+      const cards = document.getElementById("cards");
+      try {
+        const response = await fetch("./menu.json?ts=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const data = await response.json();
+        const menu = data.menu || {};
+        const keys = Object.keys(menu).sort();
+        const today = dateKey(new Date());
+
+        if (!keys.length) throw new Error("Brak pozycji w menu.json");
+
+        const upcoming = keys.filter(k => k >= today);
+        const firstKey = upcoming[0] || keys[keys.length - 1];
+        const secondKey = keys.find(k => k > firstKey);
+
+        cards.innerHTML = dayCard(firstKey, menu[firstKey], "primary", firstKey, today)
+          + (secondKey
+            ? dayCard(secondKey, menu[secondKey], "secondary", firstKey, today)
+            : "");
+
+        const fullMenu = document.getElementById("fullMenu");
+        const allDays = document.getElementById("allDays");
+        allDays.innerHTML = keys.map(k => fullDay(k, menu[k])).join("");
+        fullMenu.hidden = false;
+
+        const footer = document.getElementById("footer");
+        const source = data.source_page
+          ? `<a href="${escapeHtml(data.source_page)}" target="_blank" rel="noopener">Źródło: PM10 Toruń</a>`
+          : "Źródło: PM10 Toruń";
+        const updated = prettyUpdated(data.updated_at);
+        footer.innerHTML = `<span>${source}</span><span>${updated ? "Dane zaktualizowane: " + updated : ""}</span>`;
+      } catch (error) {
+        console.error(error);
+        cards.innerHTML = `
+          <div class="state">
+            <strong>Nie udało się wczytać jadłospisu.</strong>
+            Spróbuj odświeżyć stronę za chwilę.
+          </div>
+        `;
+      }
+    }
+
+    loadMenu();
+  </script>
+</body>
+</html>
