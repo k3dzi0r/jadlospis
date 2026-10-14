@@ -1,68 +1,68 @@
 {
   "source_page": "https://pm10torun.pl/jadlospis/",
-  "source_document": "https://pm10torun.pl/wp-content/uploads/2026/09/jadlospis-28.09-09.10.doc",
-  "label": "jadłospis 28.09-09.10",
-  "updated_at": "2026-10-13T13:58:33+00:00",
+  "source_document": "https://pm10torun.pl/wp-content/uploads/2026/10/jadlospis-12-23-pazdziernik.doc",
+  "label": "jadłospis 12-23 październik",
+  "updated_at": "2026-10-14T09:40:30+00:00",
   "menu": {
-    "2026-09-28": {
+    "2026-10-12": {
       "day": "poniedziałek",
-      "breakfast_1": "Bułka wieloziarnista (1) z masłem (7), pasztetem drobiowym i ogórkiem świeżym, kakao (7)",
-      "breakfast_2": "Cynamonka (1,3,7), pomarańcza, herbata z pokrzywy",
-      "lunch": "Krem z zielonego groszku na wywarze warzywnym (7,9) z grzankami razowymi (1,3,7,11), makaron (1) z truskawkami i sosem waniliowym (7), marchewka do gryzienia, napój imbirowy z pomarańczą"
+      "breakfast_1": "Pieczywo wieloziarniste (1) z masłem (7), pastą z szynki wędzonej, cebulki i zielonej pietruszki, ogórek kiszony, kakao (7)",
+      "breakfast_2": "Warkocz drożdżowy (1,3,7), banan, herbata miętowa",
+      "lunch": "Krem z pieczarek (7,9) na wywarze warzywnym z groszkiem ptysiowym (1,3,7,11), naleśniki (1,3,7) z musem owocowym i sosem waniliowym (7), marchewka do gryzienia, napój imbirowy"
     },
-    "2026-09-29": {
+    "2026-10-13": {
       "day": "wtorek",
-      "breakfast_1": "Kaszka manna (1) na mleku (7), pieczywo mieszane (1) z masłem (7), serkiem mascarpone (7) i konfiturą niskosłodzoną, papryka, herbata",
-      "breakfast_2": "Banan, talarki zbożowe (1), woda z cytryną",
-      "lunch": "Zupa ziemniaczana zabielana (7,9), risotto z indyka z gotowanymi warzywami (9), ryż jaśminowy, kompot wiśniowy"
+      "breakfast_1": "Zacierka (1,3) na mleku (7), pieczywo mieszane (1) z masłem (7), mascarpone (7) i konfiturą niskosłodzoną, rzodkiewka, herbata",
+      "breakfast_2": "Galaretka z ananasem, chrupki kukurydziane (1), woda z cytryną",
+      "lunch": "Kapuśniak z białej kapusty (9) z ziemniakami, makaron spaghetti (1) z sosem bolońskim i serem mozzarella (7), kalarepa do chrupania, kompot wiśniowy"
     },
-    "2026-09-30": {
+    "2026-10-14": {
       "day": "środa",
-      "breakfast_1": "Bułka śniadaniowa (1) z masłem (7), pastą z boczku wędzonego, cebulki i zielonej pietruszki, pomidor, kawa zbożowa na mleku (1,7)",
-      "breakfast_2": "Śliwka, herbatniki (1), mleko truskawkowe (7)",
-      "lunch": "Zupa pomidorowa (7,9) z ryżem, kotlet z białych warzyw (9), ziemniaki z zieleniną, sałatka z ogórka konserwowego, papryki i rzodkiewki, herbata miętowa"
+      "breakfast_1": "Bułka śniadaniowa (1) z masłem (7), jajecznica smażona na masełku (3,7), papryka, kawa zbożowa na mleku (1,7)",
+      "breakfast_2": "Kaszka manna na gęsto (1,7) z borówkami, wafle andruty (1), herbata koperkowa",
+      "lunch": "Zupa porowa (7,9) z makaronem (1), kotlet sojowy, ziemniaki z zieleniną, kalafior gotowany z masłem (7) i bułką tartą (1), woda z cytryną"
     },
-    "2026-10-01": {
+    "2026-10-15": {
       "day": "czwartek",
-      "breakfast_1": "Kanapki dekoracyjne (1,7), roszponka, wędlina, ser żółty (7), jajko (3), ogórek kiszony, rzodkiewka, kiełki i szczypiorek, mleko z miodem (7)",
-      "breakfast_2": "Deser jogurtowy straciatella (5,7,8) (wł. wyrób) z owocami, herbata z aronii",
-      "lunch": "Zupa z czerwonej soczewicy na wywarze warzywnym (7,9) z ziemniakami, zraziki (1,3) w sosie własnym, kasza kuskus (1), sałatka z buraczków, woda z cytryną"
+      "breakfast_1": "Kanapki dekoracyjne (1,7), sałata, wędlina, ser żółty (7), jajko (3), ogórek świeży, rzodkiewka, kiełki i szczypiorek, mleko z miodem (7)",
+      "breakfast_2": "Deser jogurtowy z malinami (7) (wł. wyrób), krakersy (1), napój imbirowy",
+      "lunch": "Zupa z fasolki szparagowej na wywarze warzywnym (7,9) z ziemniakami, pierś w ziołach, ryż na sypko, surówka z białej kapusty (7), herbata z lipy"
     },
-    "2026-10-02": {
+    "2026-10-16": {
       "day": "piątek",
-      "breakfast_1": "Musli (5,8,11) na mleku (7), bułka razowa (1) z masłem (7), twarożkiem śmietankowym – „ Almette” (7) i pomidorem, herbata",
-      "breakfast_2": "Jabłko, biszkopciki (1), napój imbirowy",
-      "lunch": "Krupnik z ziemniakami (9), kotlet z dorsza zapiekany (1,3,4), ziemniaki z zieleniną, surówka z kiszonej kapusty i marchewki, herbata z cytryną i pomarańczą"
+      "breakfast_1": "Musli (5,8,11) na mleku (7), bułka zbożowa (1) z masłem (7), twarożkiem śmietankowym – „ Almette” (7) i pomidorem, herbata",
+      "breakfast_2": "Melon, biszkopciki (1), woda z cytryną",
+      "lunch": "Czerwony barszcz (7,9) z makaronem (1), pulpet rybny (1,3,4), ziemniaki z zieleniną, surówka z selera i brzoskwini z płatkami migdałowymi (7,8,9), napój agrestowy"
     },
-    "2026-10-05": {
+    "2026-10-19": {
       "day": "poniedziałek",
-      "breakfast_1": "Bułka dyniowa (1) z masłem (7), pastą z jaj (4) i szczypiorku, pomidor, kakao (7)",
-      "breakfast_2": "Pieczywo chrupkie (1) z masłem (7) i miodem, melon, herbata z lipy",
-      "lunch": "Zupa ogórkowa (7,9) z ziemniakami, pierogi leniwe (1,3,7) z masłem (7) i bułką tartą (1), kalarepa do chrupania, woda z cytryną"
+      "breakfast_1": "Tosty zapiekane (1,7) z serem żółtym (7) i ketchupem, papryka, kakao (7)",
+      "breakfast_2": "Sałatka owocowa (jabłko, banan, ananas, brzoskwinia, melon, kiwi, gruszka), herbata z lipy",
+      "lunch": "Zupa pomidorowa (7,9) z ryżem, kluski ziemniaczane (1,3) z twarogiem (7) i boczkiem wędzonym, marchewka do gryzienia, kompot owocowy"
     },
-    "2026-10-06": {
+    "2026-10-20": {
       "day": "wtorek",
-      "breakfast_1": "Ciasto lane (1,3) na mleku (7), pieczywo wieloziarniste (1) z masłem (7), serem żółtym tartym (7) i ketchupem, papryka, herbata",
-      "breakfast_2": "Gofry (1,3,7) (wł. wyrób) z owocami i bitą śmietaną (7), woda z cytryną",
-      "lunch": "Zupa wiejska na wywarze warzywnym (1,3,9) z ziemniakami, gulasz z soczewicy z gotowanymi warzywami, ryż na sypko, kompot truskawkowy"
+      "breakfast_1": "Płatki kukurydziane (5,8,11) na mleku (7), pieczywo wieloziarniste (1) z masłem (7), serkiem topionym śmietankowym (7) i pomidorem, herbata",
+      "breakfast_2": "Banan, herbatniki (1), woda z cytryną",
+      "lunch": "Zupa ziemniaczana zabielana na wywarze warzywnym (7,9), makaron (1) z truskawkami i sosem jogurtowym (7), kalarepa do chrupania, napój imbirowy z pomarańczą"
     },
-    "2026-10-07": {
+    "2026-10-21": {
       "day": "środa",
-      "breakfast_1": "Bułka kajzerka (1) z masłem (7), roszponka, jajko (3), ogórek świeży, rzodkiewka, kawa zbożowa na mleku (1,7)",
-      "breakfast_2": "Banan, wafle naturalne (1), mleko smakowe (7)",
-      "lunch": "Rosół (9) z makaronem (1), placuszki drobiowe (1,3,7), ziemniaki z zieleniną, marchewka gotowana z groszkiem (7), napój agrestowy"
+      "breakfast_1": "Bułka kajzerka (1) z masłem (7), pastą z makreli wędzonej, cebulki i zielonej pietruszki (4), ogórek świeży, herbata",
+      "breakfast_2": "Koktajl mleczno-truskawkowy (7), wafle naturalne (1), woda źródlana",
+      "lunch": "Neapolitanka (7,9) z makaronem (1), kotlet z cieciorki i jarzyn, ziemniaki z zieleniną, marchewka gotowana z porami (7), woda z cytryną"
     },
-    "2026-10-08": {
+    "2026-10-22": {
       "day": "czwartek",
-      "breakfast_1": "Kanapki dekoracyjne (1,7), sałata, wędlina, ser żółty (7), jajko (3), pomidor, ogórek kiszony, kiełki i szczypiorek, mleko z miodem (7)",
-      "breakfast_2": "Budyń śmietankowy (7) z jagodami, paluszki z sezamem (1,11), woda z cytryną",
-      "lunch": "Żurek (7,9) z ziemniakami, pulpety gotowane (1,3,) w sosie pomidorowym (7), kasza pęczak (1), sałatka z fasolki szparagowej i cebulki, herbata z dzikiej róży"
+      "breakfast_1": "Kanapki dekoracyjne (1,7), roszponka, wędlina, ser żółty (7), jajko (3), pomidor, ogórek kiszony, kiełki i szczypiorek, mleko z miodem (7)",
+      "breakfast_2": "Pomarańcza, herbatniki be-be (1), napój imbirowy",
+      "lunch": "Zupa kalafiorowa na wywarze warzywnym (7,9) z ziemniakami, schab w sosie własnym (1), kasza kuskus (1), surówka wielowarzywna z kukurydzą (7,9), herbata z pokrzywy"
     },
-    "2026-10-09": {
+    "2026-10-23": {
       "day": "piątek",
-      "breakfast_1": "Płatki kukurydziane (5,8,11) na mleku (7), bułka zbożowa (1) z masłem (7), serkiem topionym śmietankowym (7) i pomidorem, herbata",
-      "breakfast_2": "Jabłko, krakersy (1), napój imbirowy",
-      "lunch": "Zupa koperkowa na wywarze warzywnym (7,9) z makaronem (1), ryba z pieca (1,3,4), ziemniaki z zieleniną, surówka z pora i marchewki, woda z cytryną i pomarańczą"
+      "breakfast_1": "Kaszka manna (1) na mleku (7), bułka dyniowa (1) z masłem (7) i kremem czekoladowym (5,7,8), rzodkiewka, herbata",
+      "breakfast_2": "Jabłko, biszkopciki (1), mleko waniliowe (7)",
+      "lunch": "Biały barszcz (7,9) z makaronem (1), miruna zapiekana w piekarniku (1,3,4), ziemniaki z zieleniną, surówka z kiszonej kapusty i marchewki, napój agrestowy"
     }
   }
 }
